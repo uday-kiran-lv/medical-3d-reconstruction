@@ -21,6 +21,7 @@ An advanced full-stack web application that converts 2D medical images into inte
 - [Local Development](#-local-development)
 - [API Documentation](#-api-documentation)
 - [Deployment](#-deployment)
+- [Troubleshooting](#-troubleshooting)
 - [Contributing](#-contributing)
 - [License](#-license)
 
@@ -65,86 +66,42 @@ An advanced full-stack web application that converts 2D medical images into inte
 
 ## 🏗️ Project Structure
 
-This project is a **full-stack monorepo** with two independent deployable applications:
-
 ```
 medical-3d-reconstruction/
-├── client/                          # React Frontend (Vercel Static)
+├── client/                          # React Frontend
 │   ├── public/                      # Static assets
 │   ├── src/
 │   │   ├── components/              # React components
-│   │   │   ├── common/              # Shared components
-│   │   │   ├── features/            # Feature components
-│   │   │   │   ├── processing/      # Image processing
-│   │   │   │   ├── reconstruction/  # 3D viewer
-│   │   │   │   ├── upload/          # File upload
-│   │   │   │   └── viewer/          # Image display
-│   │   │   └── layout/              # Layout components
-│   │   ├── hooks/                   # Custom React hooks
-│   │   ├── utils/                   # Utility functions
-│   │   │   ├── api.js               # API client
-│   │   │   └── meshGenerator.js     # 3D mesh generation
-│   │   ├── styles/                  # CSS files
-│   │   ├── App.jsx                  # Root component
-│   │   └── main.jsx                 # Entry point
-│   ├── package.json
-│   ├── vite.config.js               # Vite configuration
-│   ├── tailwind.config.js            # Tailwind CSS config
-│   ├── vercel.json                  # Vercel deployment config
-│   └── .env.example                 # Environment variables template
-│
-├── server/                          # Express Backend (Vercel Serverless)
+│   │   ├── hooks/                   # Custom hooks
+│   │   ├── utils/                   # Utilities
+│   │   └── styles/                  # CSS files
+│   └── package.json
+├── server/                          # Express Backend
 │   ├── src/
 │   │   ├── config/                  # Configuration
-│   │   │   └── database.js          # MongoDB connection
 │   │   ├── controllers/             # Route handlers
-│   │   │   ├── imageController.js
-│   │   │   └── reconstructionController.js
-│   │   ├── middleware/              # Express middleware
-│   │   │   └── errorHandler.js
-│   │   ├── models/                  # Mongoose schemas
-│   │   │   ├── User.js
-│   │   │   ├── MedicalImage.js
-│   │   │   ├── ReconstructionResult.js
-│   │   │   └── SystemSetting.js
+│   │   ├── middleware/              # Middleware
+│   │   ├── models/                  # DB models
 │   │   ├── routes/                  # API routes
-│   │   │   ├── imageRoutes.js
-│   │   │   └── reconstructionRoutes.js
-│   │   ├── services/                # Business logic
-│   │   │   └── meshGenerator.js
-│   │   └── index.js                 # Server entry point
-│   ├── package.json
-│   ├── vercel.json                  # Vercel deployment config
-│   ├── .env.example                 # Environment variables template
-│   └── requirements.txt             # Python dependencies (if needed)
-│
-├── DEPLOYMENT.md                    # Detailed deployment guide
-├── README.md                        # This file
-├── start-dev.ps1                    # PowerShell dev startup script
-└── run-dev.bat                      # Batch dev startup script
+│   │   └── index.js
+│   └── package.json
+└── DEPLOYMENT.md
 ```
 
 ---
 
 ## 📋 Prerequisites
 
-Before getting started, ensure you have the following installed:
-
-- **Node.js** v18 or higher ([Download](https://nodejs.org/))
-- **npm** v9+ or **yarn** v3+ (comes with Node.js)
+- **Node.js** v18+ ([Download](https://nodejs.org/))
+- **npm** v9+ or **yarn**
 - **Git** ([Download](https://git-scm.com/))
-- **MongoDB Atlas Account** (free tier available) ([Sign up](https://www.mongodb.com/atlas))
-
-### System Requirements
-- Minimum 4GB RAM
-- 2GB free disk space
-- Modern web browser (Chrome, Firefox, Safari, Edge)
+- **MongoDB Atlas** ([Sign up](https://www.mongodb.com/atlas))
 
 ---
 
 ## 💻 Installation
 
-### 1. Clone the Repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/uday-kiran-lv/medical-3d-reconstruction.git
@@ -158,9 +115,9 @@ cd server
 npm install
 ```
 
-Create a `.env` file in the `server` directory:
+Create `.env`:
 ```env
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/medical_3d_db?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/medical_3d_db
 NODE_ENV=development
 PORT=5000
 ALLOWED_ORIGINS=http://localhost:5173
@@ -173,7 +130,7 @@ cd ../client
 npm install
 ```
 
-Create a `.env` file in the `client` directory:
+Create `.env`:
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
 ```
@@ -182,328 +139,82 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ## 🚀 Local Development
 
-### Option 1: Manual Start (Terminal)
-
-**Terminal 1 - Start Backend Server:**
+**Terminal 1 - Backend:**
 ```bash
 cd server
 npm run dev
 ```
-The server will start at `http://localhost:5000`
 
-**Terminal 2 - Start Frontend Dev Server:**
+**Terminal 2 - Frontend:**
 ```bash
 cd client
 npm run dev
 ```
-The client will start at `http://localhost:5173`
 
-### Option 2: Quick Start Scripts
-
-**Windows - PowerShell:**
-```powershell
-.\start-dev.ps1
-```
-
-**Windows - Command Prompt:**
-```cmd
-run-dev.bat
-```
-
-Both scripts will start the backend and frontend concurrently.
-
-### Access the Application
-
-Open your browser and navigate to:
-```
-http://localhost:5173
-```
+Open: `http://localhost:5173`
 
 ---
 
 ## 📡 API Documentation
 
-### Base URL
-```
-http://localhost:5000/api
-```
+**Base URL:** `http://localhost:5000/api`
 
-### Key Endpoints
-
-#### Image Upload
-```
+### Image Upload
+```http
 POST /api/images/upload
 Content-Type: multipart/form-data
-
-Body:
-- file: <image-file>
-- userId: <user-id>
 ```
 
-**Response:**
-```json
-{
-  "success": true,
-  "imageId": "507f1f77bcf86cd799439011",
-  "filename": "scan.jpg",
-  "uploadedAt": "2026-01-09T10:30:00Z"
-}
-```
-
-#### Start Reconstruction
-```
+### Start Reconstruction
+```http
 POST /api/reconstructions/start
-Content-Type: application/json
-
-Body:
-{
-  "imageId": "507f1f77bcf86cd799439011",
-  "algorithm": "default",
-  "parameters": {
-    "threshold": 128,
-    "smoothing": true
-  }
-}
 ```
 
-#### Get Reconstruction Status
+### Get Results
+```http
+GET /api/reconstructions/:id/result
 ```
-GET /api/reconstructions/:reconstructionId
-```
-
-#### Get Reconstruction Result
-```
-GET /api/reconstructions/:reconstructionId/result
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "meshData": {
-    "vertices": [...],
-    "faces": [...],
-    "normals": [...]
-  },
-  "status": "completed",
-  "processingTime": 15000
-}
-```
-
-For complete API documentation, see [API_DOCS.md](./API_DOCS.md) (if available)
 
 ---
 
 ## 🌐 Deployment
 
-### Prerequisites for Deployment
-1. GitHub repository (code pushed)
-2. Vercel account ([Sign up](https://vercel.com/))
-3. MongoDB Atlas account with connection string
+1. **Deploy Backend** to Vercel with root directory `server`
+2. **Deploy Frontend** to Vercel with root directory `client`
+3. Set environment variables in both projects
 
-### Quick Deployment Guide
-
-**For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)**
-
-#### Deploy Backend
-1. Go to [vercel.com/new](https://vercel.com/new)
-2. Import your GitHub repository
-3. Set Root Directory to `server`
-4. Add environment variables:
-   - `MONGODB_URI`: Your MongoDB Atlas connection string
-   - `NODE_ENV`: `production`
-   - `ALLOWED_ORIGINS`: Your frontend URL
-5. Click Deploy
-
-#### Deploy Frontend
-1. Create new Vercel project
-2. Set Root Directory to `client`
-3. Build Command: `npm run build`
-4. Add environment variables:
-   - `VITE_API_BASE_URL`: Your backend API URL
-5. Click Deploy
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Style
-- Use ES6+ syntax
-- Follow ESLint configuration
-- Write meaningful commit messages
-- Add comments for complex logic
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed steps.
 
 ---
 
 ## 🆘 Troubleshooting
 
-### Common Issues
+**MongoDB Connection Error:**
+- Check connection string in `.env`
+- Allow `0.0.0.0/0` in MongoDB Atlas whitelist
 
-**MongoDB Connection Error**
-- Verify connection string in `.env`
-- Check IP whitelist in MongoDB Atlas (allow `0.0.0.0/0` for Vercel)
-- Ensure database user has correct permissions
+**Port Already in Use:**
+- Change PORT in `.env` or run: `lsof -i :5000`
 
-**Port Already in Use**
-- Change PORT in `.env` file
-- Or kill the process using the port: `lsof -i :5000`
-
-**CORS Errors**
+**CORS Errors:**
 - Update `ALLOWED_ORIGINS` in server `.env`
-- Verify frontend URL matches
-
-**Module Not Found**
-- Run `npm install` in both `client` and `server`
-- Clear node_modules: `rm -rf node_modules package-lock.json && npm install`
 
 ---
 
-## 📞 Support & Contact
+## 🤝 Contributing
 
-For questions or support, please:
-- Open an issue on GitHub
-- Check existing documentation
-- Review [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment-specific help
+1. Fork repository
+2. Create feature branch: `git checkout -b feature/my-feature`
+3. Commit changes: `git commit -m 'Add feature'`
+4. Push: `git push origin feature/my-feature`
+5. Open Pull Request
 
 ---
 
-## 🎯 Roadmap
+## 📝 License
 
-- [ ] Support for additional medical image formats (NIFTI, ANALYZE)
-- [ ] Real-time collaboration features
-- [ ] Advanced segmentation algorithms
-- [ ] Export to multiple 3D formats (STL, OBJ, GLTF)
-- [ ] Mobile app version
-- [ ] Batch processing capabilities
-- [ ] ML model optimization for faster reconstruction
+MIT License - See [LICENSE](./LICENSE)
 
 ---
 
 **Last Updated:** January 9, 2026 | **Version:** 1.0.0
-npm install
-cp .env.example .env
-# Edit .env with your MongoDB URI
-npm run dev
-# Server runs on http://localhost:5000
-```
-
-**2. Start Frontend:**
-```bash
-cd client
-npm install
-cp .env.example .env.local
-npm run dev
-# App runs on http://localhost:3000
-```
-
-## ☁️ Deploy to Vercel
-
-> **Important**: Deploy backend FIRST, then frontend
-
-### 📦 Step 1: Deploy Backend
-
-1. Push to GitHub
-2. Import `server/` folder in [Vercel](https://vercel.com/new)
-3. Set Root Directory: `server`
-4. Add Environment Variables:
-   | Variable | Value |
-   |----------|-------|
-   | `MONGODB_URI` | Your MongoDB Atlas URI |
-   | `NODE_ENV` | `production` |
-   | `ALLOWED_ORIGINS` | `*` (update after frontend deploy) |
-
-5. Deploy → Copy URL (e.g., `https://medical-3d-api.vercel.app`)
-
-### 🖥️ Step 2: Deploy Frontend
-
-1. Import `client/` folder in Vercel (new project)
-2. Set Root Directory: `client`
-3. Framework Preset: `Vite`
-4. Add Environment Variables:
-   | Variable | Value |
-   |----------|-------|
-   | `VITE_API_URL` | Your backend URL from Step 1 |
-
-5. Deploy → Copy URL (e.g., `https://medical-3d-app.vercel.app`)
-
-### 🔗 Step 3: Connect Both
-
-1. Go to **Backend** project → Settings → Environment Variables
-2. Update `ALLOWED_ORIGINS` to your frontend URL
-3. Redeploy backend
-
-> 📖 **Detailed guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md)
-
-## 🛠️ Tech Stack
-
-### Frontend
-- ⚛️ React 18
-- ⚡ Vite
-- 🎨 Tailwind CSS
-- 🔮 Three.js / React Three Fiber
-- 📦 Lucide React Icons
-
-### Backend
-- 🟢 Node.js
-- 🚂 Express.js
-- 🍃 MongoDB / Mongoose
-- 🔐 CORS middleware
-
-## ✨ Features
-
-- 📷 Upload medical images (MRI, CT, X-ray, Ultrasound)
-- 🖼️ Support for DICOM, NIFTI, JPEG, PNG formats
-- 🔍 Interactive image viewer with zoom/pan
-- 🧠 AI-powered organ detection (Brain, Kidney, Heart, Lung, Liver)
-- 🎯 Automatic 3D reconstruction from 2D slices
-- 🎨 Medical-grade grayscale MRI visualization
-- 🔄 360° rotatable 3D models
-- 📊 Anatomical structure labeling
-
-## 📋 Environment Variables
-
-### Backend (`server/.env`)
-```env
-MONGODB_URI=mongodb+srv://...
-NODE_ENV=production
-PORT=5000
-ALLOWED_ORIGINS=https://your-frontend.vercel.app
-```
-
-### Frontend (`client/.env.local`)
-```env
-VITE_API_URL=https://your-backend.vercel.app
-VITE_APP_NAME=Medical 3D Reconstruction
-```
-
-## 🔒 Security Notes
-
-- Never commit `.env` files to git
-- Use MongoDB Atlas IP whitelist
-- Configure CORS for production domains only
-- Use HTTPS in production
-
-## 📄 License
-
-MIT License - See LICENSE file for details
-#   m e d i c a l - 3 d - r e c o n s t r u c t i o n 
- 
- #   m e d i c a l - 3 d - r e c o n s t r u c t i o n 
- 
- #   m e d i c a l - 3 d - r e c o n s t r u c t i o n 
- 
- 
