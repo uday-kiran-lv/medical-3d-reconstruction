@@ -6460,10 +6460,10 @@ function combineIntensityAndEdges(intensityMap, edgeMap, width, height) {
 }
 
 /**
- * Generate a proper volumetric 3D mesh from intensity data
+ * Generate a proper volumetric 3D mesh from intensity data (legacy)
  * Creates front surface, back surface, and side walls for depth
  */
-function generateVolumetricMesh(intensityMap, imgWidth, imgHeight, resX, resY, options) {
+function generateVolumetricMeshLegacy(intensityMap, imgWidth, imgHeight, resX, resY, options) {
   const { detail, smoothing, depthScale } = options
   const components = []
   
@@ -8599,7 +8599,7 @@ function applyAnatomicalCorrections(meshData, organType) {
   }
 }
 
-export { analyzeImage, generateRealisticBrainModel, generatePhotorealistic3DFromImage }
+export { analyzeImage, generateRealisticBrainModel }
 
 export default {
   generateMeshLocally,
