@@ -641,7 +641,8 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     // =========================================================================
     
     // KIDNEY CORTEX MRI - Outer layer, brighter signal
-    if (materialType === 'kidney_cortex_mri' || materialType === 'kidney_surface_mri') {
+    if (materialType === 'kidney_cortex_mri' || materialType === 'kidney_surface_mri' ||
+        materialType === 'kidney_cortex') {
       return {
         roughness: 0.48,
         metalness: 0.0,
@@ -659,7 +660,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // KIDNEY MEDULLA MRI - Inner pyramids, darker signal
-    if (materialType === 'kidney_medulla_mri') {
+    if (materialType === 'kidney_medulla_mri' || materialType === 'kidney_medulla') {
       return {
         roughness: 0.52,
         metalness: 0.0,
@@ -688,7 +689,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // KIDNEY CALYX MRI - Cup-shaped collectors
-    if (materialType === 'kidney_calyx_mri') {
+    if (materialType === 'kidney_calyx_mri' || materialType === 'kidney_calyx') {
       return {
         roughness: 0.50,
         metalness: 0.0,
@@ -704,7 +705,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // KIDNEY PELVIS MRI - Central collecting chamber
-    if (materialType === 'kidney_pelvis_mri') {
+    if (materialType === 'kidney_pelvis_mri' || materialType === 'kidney_pelvis') {
       return {
         roughness: 0.48,
         metalness: 0.0,
@@ -720,7 +721,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // KIDNEY HILUM MRI - Concave entry region
-    if (materialType === 'kidney_hilum_mri') {
+    if (materialType === 'kidney_hilum_mri' || materialType === 'kidney_hilum') {
       return {
         roughness: 0.58,
         metalness: 0.0,
@@ -733,7 +734,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // RENAL ARTERY MRI - Flow void (very dark)
-    if (materialType === 'renal_artery_mri') {
+    if (materialType === 'renal_artery_mri' || materialType === 'renal_artery') {
       return {
         roughness: 0.38,
         metalness: 0.0,
@@ -749,7 +750,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // RENAL VEIN MRI - Flow void with slight blue cast
-    if (materialType === 'renal_vein_mri') {
+    if (materialType === 'renal_vein_mri' || materialType === 'renal_vein') {
       return {
         roughness: 0.40,
         metalness: 0.0,
@@ -765,7 +766,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // URETER MRI - Medium gray tubular
-    if (materialType === 'ureter_mri') {
+    if (materialType === 'ureter_mri' || materialType === 'ureter') {
       return {
         roughness: 0.52,
         metalness: 0.0,
@@ -778,7 +779,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // KIDNEY CAPSULE MRI - Bright outer membrane
-    if (materialType === 'kidney_capsule_mri') {
+    if (materialType === 'kidney_capsule_mri' || materialType === 'kidney_capsule') {
       return {
         roughness: 0.42,
         metalness: 0.0,
@@ -793,7 +794,7 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // PERIRENAL FAT MRI - Very bright (T1 high signal)
-    if (materialType === 'fat_mri') {
+    if (materialType === 'fat_mri' || materialType === 'fat') {
       return {
         roughness: 0.58,
         metalness: 0.0,
