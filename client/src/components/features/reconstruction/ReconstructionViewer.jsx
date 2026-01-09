@@ -479,6 +479,144 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // =========================================================================
+    // LIVER TISSUE MATERIALS - Photorealistic hepatic visualization
+    // Based on surgical appearance and medical imaging
+    // =========================================================================
+    
+    // LIVER PARENCHYMA - Main liver tissue, reddish-brown
+    if (name.includes('lobe') || name.includes('liver') || materialType === 'liver') {
+      return {
+        roughness: 0.42,           // Smooth Glisson's capsule surface
+        metalness: 0.0,
+        envMapIntensity: 0.52,     // Wet organ surface reflections
+        emissive: '#2a1212',       // Deep blood-rich tissue glow
+        emissiveIntensity: 0.08,   // Hepatic blood perfusion
+        clearcoat: 0.45,           // Wet serosal surface
+        clearcoatRoughness: 0.32,  // Soft wet reflections
+        sheen: 0.18,               // Tissue surface sheen
+        sheenRoughness: 0.48,
+        sheenColor: '#905050',     // Reddish-brown tissue sheen
+        transmission: 0.01,        // Minimal translucency
+        thickness: 1.2
+      }
+    }
+    
+    // PORTAL VEIN - Large vein carrying nutrient-rich blood
+    if (name.includes('portal_vein')) {
+      return {
+        roughness: 0.32,
+        metalness: 0.0,
+        envMapIntensity: 0.55,
+        emissive: '#0a1528',       // Dark venous blood
+        emissiveIntensity: 0.08,
+        clearcoat: 0.50,
+        clearcoatRoughness: 0.28,
+        sheen: 0.12,
+        sheenRoughness: 0.45,
+        sheenColor: '#405080'
+      }
+    }
+    
+    // HEPATIC ARTERY - Oxygenated blood supply
+    if (name.includes('hepatic_artery')) {
+      return {
+        roughness: 0.28,
+        metalness: 0.0,
+        envMapIntensity: 0.58,
+        emissive: '#3a0a0a',
+        emissiveIntensity: 0.10,
+        clearcoat: 0.55,
+        clearcoatRoughness: 0.25,
+        sheen: 0.14,
+        sheenRoughness: 0.42,
+        sheenColor: '#aa4040'
+      }
+    }
+    
+    // HEPATIC VEINS - Drain into IVC
+    if (name.includes('hepatic_vein') || name.includes('inferior_vena_cava')) {
+      return {
+        roughness: 0.34,
+        metalness: 0.0,
+        envMapIntensity: 0.52,
+        emissive: '#08102a',
+        emissiveIntensity: 0.07,
+        clearcoat: 0.48,
+        clearcoatRoughness: 0.32,
+        sheen: 0.10,
+        sheenRoughness: 0.48,
+        sheenColor: '#405080'
+      }
+    }
+    
+    // BILE DUCTS - Yellow-green biliary system
+    if (name.includes('bile') || name.includes('hepatic_duct') || name.includes('cystic') || materialType === 'duct') {
+      return {
+        roughness: 0.38,
+        metalness: 0.0,
+        envMapIntensity: 0.45,
+        emissive: '#1a1a08',
+        emissiveIntensity: 0.05,
+        clearcoat: 0.42,
+        clearcoatRoughness: 0.35,
+        sheen: 0.15,
+        sheenRoughness: 0.50,
+        sheenColor: '#808040',
+        transmission: 0.05,
+        thickness: 0.3
+      }
+    }
+    
+    // GALLBLADDER - Green-tinted organ
+    if (name.includes('gallbladder') || materialType === 'gallbladder') {
+      return {
+        roughness: 0.40,
+        metalness: 0.0,
+        envMapIntensity: 0.50,
+        emissive: '#0a1a0a',
+        emissiveIntensity: 0.06,
+        clearcoat: 0.48,
+        clearcoatRoughness: 0.32,
+        sheen: 0.16,
+        sheenRoughness: 0.45,
+        sheenColor: '#508050',
+        transmission: 0.08,
+        thickness: 0.4
+      }
+    }
+    
+    // FALCIFORM LIGAMENT - Connective tissue
+    if (name.includes('falciform') || name.includes('ligament')) {
+      return {
+        roughness: 0.55,
+        metalness: 0.0,
+        envMapIntensity: 0.38,
+        emissive: '#1a1815',
+        emissiveIntensity: 0.03,
+        clearcoat: 0.22,
+        clearcoatRoughness: 0.52,
+        sheen: 0.12,
+        sheenRoughness: 0.55,
+        sheenColor: '#c0b8a8'
+      }
+    }
+    
+    // GLISSON'S CAPSULE - Thin fibrous covering
+    if (name.includes('glisson') || name.includes('capsule')) {
+      return {
+        roughness: 0.42,
+        metalness: 0.0,
+        envMapIntensity: 0.55,
+        emissive: '#181515',
+        emissiveIntensity: 0.04,
+        clearcoat: 0.38,
+        clearcoatRoughness: 0.40,
+        transmission: 0.15,
+        thickness: 0.3
+      }
+    }
+    
+    // =========================================================================
     // KIDNEY MRI VOLUMETRIC MATERIALS - Medical Grade Shading
     // Realistic MRI grayscale rendering with subsurface scattering hints
     // =========================================================================
