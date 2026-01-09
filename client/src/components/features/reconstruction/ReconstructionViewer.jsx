@@ -1201,12 +1201,20 @@ const ReconstructionViewer = ({ data }) => {
               <>
                 <div>
                   <span className="text-gray-600">Source:</span>
-                  <span className="ml-2 font-medium text-blue-600">Image-Based</span>
+                  <span className="ml-2 font-medium text-blue-600">
+                    {data.metadata.reconstructionMethod || 'Image-Based'}
+                  </span>
                 </div>
                 <div>
                   <span className="text-gray-600">Regions Detected:</span>
                   <span className="ml-2 font-medium">{data.metadata.imageAnalysis.regionsDetected}</span>
                 </div>
+                {data.metadata.resolution && (
+                  <div>
+                    <span className="text-gray-600">Resolution:</span>
+                    <span className="ml-2 font-medium text-green-600">{data.metadata.resolution}</span>
+                  </div>
+                )}
               </>
             )}
           </div>
