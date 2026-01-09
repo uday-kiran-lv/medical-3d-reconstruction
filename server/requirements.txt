@@ -1,0 +1,29 @@
+# Medical 3D Converter - Python Dependencies (FAST VERSION)
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+numpy>=1.21.0
+scipy>=1.7.0
+
+# Medical image handling
+pydicom>=2.3.0
+
+# Image processing and segmentation
+scikit-image>=0.19.0
+pillow>=9.0.0
+
+# Visualization
+matplotlib>=3.5.0
+
+# Advanced 3D visualization and processing
+vtk>=9.0.0
+
+# Web API server
+flask>=2.0.0
+flask-cors>=3.0.0
+
+# OPTIONAL: JIT compilation for faster processing
+# numba>=0.56.0
+
+# If VTK installation fails, you can try:
+# pip install vtk --prefer-binary
