@@ -132,75 +132,59 @@ function App() {
     setProcessingMessage('Initializing reconstruction...')
     setActiveTab('processing')
     
-    // Determine organ type - check for brain/heart
-    let organType = parameters.organType !== 'auto' 
-      ? parameters.organType 
-      : detectOrganTypeFromMetadata(imageMetadata)
-    
     // ================================================================
-    // IMPROVED HEART DETECTION - Check for chest X-ray patterns
+    // ORGAN TYPE DETECTION - Priority: User Selection > Filename > Auto
     // ================================================================
-    let isHeartImage = false
+    let organType = parameters.organType
     const fileName = (imageMetadata?.fileName || '').toLowerCase()
     
-    // Check filename hints for heart/chest X-ray
-    const heartFileHints = 
-      fileName.includes('heart') || fileName.includes('cardiac') ||
-      fileName.includes('chest') || fileName.includes('thorax') ||
-      fileName.includes('xray') || fileName.includes('x-ray') ||
-      fileName.includes('thoracic') || fileName.includes('coronary') ||
-      fileName.includes('aorta') || fileName.includes('cardio')
-    
-    // If metadata indicates heart type or filename hints
-    if (heartFileHints || organType === 'heart' || imageMetadata?.image_type === 'heart') {
-      isHeartImage = true
-      organType = 'heart'
-      console.log('❤️ Heart/Chest X-ray detected:', { fileName, organType })
-    }
-    
-    // ================================================================
-    // IMPROVED BRAIN DETECTION - Analyze the actual image first
-    // ================================================================
-    let isBrainImage = false
-    
-    // First check filename hints
-    const fileNameHints = 
-      (imageMetadata?.fileName || '').toLowerCase().includes('brain') ||
-      (imageMetadata?.fileName || '').toLowerCase().includes('neuro') ||
-      (imageMetadata?.fileName || '').toLowerCase().includes('head') ||
-      (imageMetadata?.fileName || '').toLowerCase().includes('cerebr') ||
-      (imageMetadata?.fileName || '').toLowerCase().includes('mri') ||
-      (imageMetadata?.fileName || '').toLowerCase().includes('ct_brain')
-    
-    // If we have an uploaded image, analyze it to detect if it's a brain
-    if (uploadedImage) {
-      try {
-        setProcessingMessage('Analyzing image content...')
-        const analysis = await analyzeImage(uploadedImage)
-        
-        // Use the brain detection function
-        isBrainImage = detectBrainFromImage(analysis) || fileNameHints || organType === 'brain'
-        
-        console.log('🔍 Image Analysis Results:', {
-          fileNameHints,
-          organType,
-          detectedAsBrain: detectBrainFromImage(analysis),
-          finalIsBrainImage: isBrainImage
-        })
-      } catch (err) {
-        console.warn('Image analysis failed, using filename hints:', err)
-        isBrainImage = fileNameHints || organType === 'brain'
-      }
+    // If user explicitly selected an organ type (not auto), use that
+    if (organType !== 'auto') {
+      console.log('🎯 User selected organ type:', organType)
     } else {
-      // Fallback to filename/metadata detection
-      isBrainImage = fileNameHints || organType === 'brain' || imageMetadata?.image_type === 'brain'
+      // Auto-detect from filename
+      // Check for HEART/CHEST X-RAY first (most common medical images)
+      if (fileName.includes('heart') || fileName.includes('cardiac') ||
+          fileName.includes('chest') || fileName.includes('thorax') ||
+          fileName.includes('xray') || fileName.includes('x-ray') ||
+          fileName.includes('thoracic') || fileName.includes('coronary') ||
+          fileName.includes('aorta') || fileName.includes('cardio') ||
+          fileName.includes('ecg') || fileName.includes('echo')) {
+        organType = 'heart'
+        console.log('❤️ Auto-detected as HEART from filename:', fileName)
+      }
+      // Check for BRAIN
+      else if (fileName.includes('brain') || fileName.includes('neuro') ||
+               fileName.includes('cerebr') || fileName.includes('cranial') ||
+               fileName.includes('cortex') || fileName.includes('ct_brain') ||
+               fileName.includes('mri_brain') || fileName.includes('head_ct')) {
+        organType = 'brain'
+        console.log('🧠 Auto-detected as BRAIN from filename:', fileName)
+      }
+      // Check for other organs
+      else if (fileName.includes('liver') || fileName.includes('hepatic')) {
+        organType = 'liver'
+      }
+      else if (fileName.includes('kidney') || fileName.includes('renal')) {
+        organType = 'kidney'
+      }
+      else if (fileName.includes('lung') || fileName.includes('pulmon')) {
+        organType = 'lung'
+      }
+      // Default to HEART for general medical X-rays (most common use case)
+      else {
+        organType = 'heart'
+        console.log('📷 No specific organ detected, defaulting to HEART for medical image')
+      }
     }
 
     const startTime = Date.now()
     let meshData = null
 
-    // If brain image detected, use specialized brain processing stages
-    if (isBrainImage) {
+    // ================================================================
+    // BRAIN PROCESSING
+    // ================================================================
+    if (organType === 'brain') {
       const brainStages = [
         { progress: 5, message: 'Loading brain scan...' },
         { progress: 12, message: 'Analyzing brain structure...' },
@@ -260,7 +244,7 @@ function App() {
     // ================================================================
     // HEART/CHEST X-RAY PROCESSING - Generate photorealistic 3D heart
     // ================================================================
-    if (isHeartImage) {
+    if (organType === 'heart') {
       const heartStages = [
         { progress: 5, message: 'Loading chest X-ray / cardiac image...' },
         { progress: 10, message: 'Analyzing cardiac silhouette...' },
