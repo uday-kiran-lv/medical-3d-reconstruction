@@ -355,144 +355,144 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // =========================================================================
-    // PHOTOREALISTIC KIDNEY MRI MATERIALS
-    // Medical-grade grayscale rendering for kidney anatomy visualization
-    // Based on T1/T2 MRI signal intensities
+    // PHOTOREALISTIC KIDNEY TISSUE MATERIALS
+    // Realistic tissue colors - reddish-pink, vascular, soft-tissue appearance
+    // Similar to heart tissue rendering for anatomical realism
     // =========================================================================
     
-    // RENAL CORTEX - Outer functional layer (lighter gray in MRI)
+    // RENAL CORTEX - Outer functional layer (reddish-pink tissue)
     if (name.includes('cortex') || name.includes('renal_column') || name.includes('cortical')) {
       return {
-        roughness: 0.55,           // Smooth tissue surface
+        roughness: 0.38,           // Smooth wet tissue surface
         metalness: 0.0,
-        envMapIntensity: 0.45,     // Subtle reflections for MRI look
-        emissive: '#1a1a1a',       // Dark gray emission for depth
-        emissiveIntensity: 0.08,
-        clearcoat: 0.25,           // Wet capsule surface
-        clearcoatRoughness: 0.5,
-        sheen: 0.1,
-        sheenRoughness: 0.6,
-        sheenColor: '#909090'      // Gray MRI sheen
+        envMapIntensity: 0.55,     // Good reflections for wet tissue
+        emissive: '#4a2028',       // Deep reddish glow
+        emissiveIntensity: 0.12,
+        clearcoat: 0.58,           // Wet tissue surface
+        clearcoatRoughness: 0.32,
+        sheen: 0.18,
+        sheenRoughness: 0.45,
+        sheenColor: '#c08080'      // Pinkish tissue sheen
       }
     }
     
-    // RENAL MEDULLA - Inner region with pyramids (darker gray in MRI)
+    // RENAL MEDULLA - Inner region with pyramids (darker reddish-brown)
     if (name.includes('medulla') || name.includes('pyramid')) {
       return {
-        roughness: 0.58,
+        roughness: 0.42,
         metalness: 0.0,
-        envMapIntensity: 0.38,
-        emissive: '#0f0f0f',       // Darker emission
-        emissiveIntensity: 0.1,
-        clearcoat: 0.18,
-        clearcoatRoughness: 0.55,
-        sheen: 0.08,
-        sheenRoughness: 0.65,
-        sheenColor: '#606060'
+        envMapIntensity: 0.48,
+        emissive: '#3a1820',       // Dark reddish-brown emission
+        emissiveIntensity: 0.14,
+        clearcoat: 0.52,
+        clearcoatRoughness: 0.38,
+        sheen: 0.15,
+        sheenRoughness: 0.50,
+        sheenColor: '#905050'
       }
     }
     
-    // RENAL PELVIS & CALYCES - Collecting system (medium gray)
+    // RENAL PELVIS & CALYCES - Collecting system (pale pink mucosal)
     if (name.includes('pelvis') || name.includes('calyx') || name.includes('calyces')) {
-      return {
-        roughness: 0.52,
-        metalness: 0.0,
-        envMapIntensity: 0.42,
-        emissive: '#151515',
-        emissiveIntensity: 0.07,
-        clearcoat: 0.30,           // Fluid-filled appearance
-        clearcoatRoughness: 0.45,
-        sheen: 0.12,
-        sheenRoughness: 0.55,
-        sheenColor: '#808080'
-      }
-    }
-    
-    // RENAL HILUM - Concave medial region
-    if (name.includes('hilum')) {
-      return {
-        roughness: 0.60,
-        metalness: 0.0,
-        envMapIntensity: 0.35,
-        emissive: '#0a0a0a',
-        emissiveIntensity: 0.12,
-        clearcoat: 0.15,
-        clearcoatRoughness: 0.6
-      }
-    }
-    
-    // RENAL ARTERY - Dark in MRI (flow void)
-    if (name.includes('renal_artery') || name.includes('segmental_artery') || 
-        name.includes('interlobar_artery') || name.includes('arcuate_artery')) {
       return {
         roughness: 0.35,
         metalness: 0.0,
-        envMapIntensity: 0.50,
-        emissive: '#080808',
-        emissiveIntensity: 0.15,
-        clearcoat: 0.45,
-        clearcoatRoughness: 0.35,
-        sheen: 0.1,
-        sheenRoughness: 0.5,
-        sheenColor: '#404040'
+        envMapIntensity: 0.52,
+        emissive: '#4a3535',
+        emissiveIntensity: 0.10,
+        clearcoat: 0.62,           // Moist mucosal lining
+        clearcoatRoughness: 0.30,
+        sheen: 0.20,
+        sheenRoughness: 0.42,
+        sheenColor: '#d0a0a0'
       }
     }
     
-    // RENAL VEIN - Dark with slight blue tint
-    if (name.includes('renal_vein') || name.includes('segmental_vein')) {
-      return {
-        roughness: 0.38,
-        metalness: 0.0,
-        envMapIntensity: 0.48,
-        emissive: '#080810',
-        emissiveIntensity: 0.12,
-        clearcoat: 0.42,
-        clearcoatRoughness: 0.38,
-        sheen: 0.1,
-        sheenRoughness: 0.52,
-        sheenColor: '#404050'
-      }
-    }
-    
-    // URETER - Medium gray tubular structure
-    if (name.includes('ureter') || name.includes('ureteropelvic')) {
-      return {
-        roughness: 0.50,
-        metalness: 0.0,
-        envMapIntensity: 0.40,
-        emissive: '#121212',
-        emissiveIntensity: 0.06,
-        clearcoat: 0.28,
-        clearcoatRoughness: 0.50
-      }
-    }
-    
-    // RENAL CAPSULE - Bright white outer layer
-    if (name.includes('capsule')) {
+    // RENAL HILUM - Concave medial region (darker tissue)
+    if (name.includes('hilum')) {
       return {
         roughness: 0.45,
         metalness: 0.0,
-        envMapIntensity: 0.55,
-        emissive: '#202020',
-        emissiveIntensity: 0.05,
-        clearcoat: 0.35,
-        clearcoatRoughness: 0.45,
-        transmission: 0.1,
+        envMapIntensity: 0.42,
+        emissive: '#2a1518',
+        emissiveIntensity: 0.15,
+        clearcoat: 0.48,
+        clearcoatRoughness: 0.42
+      }
+    }
+    
+    // RENAL ARTERY - Bright arterial red
+    if (name.includes('renal_artery') || name.includes('segmental_artery') || 
+        name.includes('interlobar_artery') || name.includes('arcuate_artery')) {
+      return {
+        roughness: 0.25,
+        metalness: 0.0,
+        envMapIntensity: 0.60,
+        emissive: '#5a1820',
+        emissiveIntensity: 0.18,
+        clearcoat: 0.68,
+        clearcoatRoughness: 0.25,
+        sheen: 0.15,
+        sheenRoughness: 0.40,
+        sheenColor: '#e06060'
+      }
+    }
+    
+    // RENAL VEIN - Deep purple-blue venous
+    if (name.includes('renal_vein') || name.includes('segmental_vein')) {
+      return {
+        roughness: 0.28,
+        metalness: 0.0,
+        envMapIntensity: 0.58,
+        emissive: '#2a1835',
+        emissiveIntensity: 0.15,
+        clearcoat: 0.65,
+        clearcoatRoughness: 0.28,
+        sheen: 0.14,
+        sheenRoughness: 0.45,
+        sheenColor: '#8060a0'
+      }
+    }
+    
+    // URETER - Pale tan/pink tubular tissue
+    if (name.includes('ureter') || name.includes('ureteropelvic')) {
+      return {
+        roughness: 0.40,
+        metalness: 0.0,
+        envMapIntensity: 0.50,
+        emissive: '#3a2820',
+        emissiveIntensity: 0.08,
+        clearcoat: 0.55,
+        clearcoatRoughness: 0.38
+      }
+    }
+    
+    // RENAL CAPSULE - Pale pinkish-white fibrous membrane
+    if (name.includes('capsule')) {
+      return {
+        roughness: 0.38,
+        metalness: 0.0,
+        envMapIntensity: 0.58,
+        emissive: '#4a3838',
+        emissiveIntensity: 0.06,
+        clearcoat: 0.55,
+        clearcoatRoughness: 0.35,
+        transmission: 0.15,
         thickness: 0.5
       }
     }
     
-    // PERIRENAL FAT - Very bright in MRI
+    // PERIRENAL FAT - Yellowish adipose tissue
     if (name.includes('perirenal') || name.includes('fat')) {
       return {
-        roughness: 0.60,
+        roughness: 0.55,
         metalness: 0.0,
-        envMapIntensity: 0.35,
-        emissive: '#252525',
-        emissiveIntensity: 0.04,
-        clearcoat: 0.12,
-        clearcoatRoughness: 0.6,
-        transmission: 0.15,
+        envMapIntensity: 0.45,
+        emissive: '#3a3520',
+        emissiveIntensity: 0.05,
+        clearcoat: 0.25,
+        clearcoatRoughness: 0.50,
+        transmission: 0.12,
         thickness: 0.3
       }
     }
@@ -636,175 +636,175 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     }
     
     // =========================================================================
-    // KIDNEY MRI VOLUMETRIC MATERIALS - Medical Grade Shading
-    // Realistic MRI grayscale rendering with subsurface scattering hints
+    // KIDNEY REALISTIC TISSUE MATERIALS - Photorealistic Rendering
+    // Realistic tissue colors with wet surface appearance
     // =========================================================================
     
-    // KIDNEY CORTEX MRI - Outer layer, brighter signal
+    // KIDNEY CORTEX - Outer layer, reddish-pink tissue
     if (materialType === 'kidney_cortex_mri' || materialType === 'kidney_surface_mri' ||
         materialType === 'kidney_cortex') {
       return {
-        roughness: 0.48,
+        roughness: 0.38,
         metalness: 0.0,
-        envMapIntensity: 0.52,
-        emissive: '#1a1a1a',
-        emissiveIntensity: 0.06,
-        clearcoat: 0.35,
-        clearcoatRoughness: 0.42,
-        sheen: 0.15,
-        sheenRoughness: 0.5,
-        sheenColor: '#a0a0a0',
+        envMapIntensity: 0.55,
+        emissive: '#4a2028',
+        emissiveIntensity: 0.12,
+        clearcoat: 0.58,
+        clearcoatRoughness: 0.32,
+        sheen: 0.18,
+        sheenRoughness: 0.45,
+        sheenColor: '#c08080',
         transmission: 0.02,
         thickness: 0.4
       }
     }
     
-    // KIDNEY MEDULLA MRI - Inner pyramids, darker signal
+    // KIDNEY MEDULLA - Inner pyramids, darker reddish-brown
     if (materialType === 'kidney_medulla_mri' || materialType === 'kidney_medulla') {
-      return {
-        roughness: 0.52,
-        metalness: 0.0,
-        envMapIntensity: 0.40,
-        emissive: '#0e0e0e',
-        emissiveIntensity: 0.10,
-        clearcoat: 0.28,
-        clearcoatRoughness: 0.50,
-        sheen: 0.10,
-        sheenRoughness: 0.55,
-        sheenColor: '#606060'
-      }
-    }
-    
-    // KIDNEY PAPILLA MRI - Pyramid tips, darkest
-    if (materialType === 'kidney_papilla_mri') {
-      return {
-        roughness: 0.55,
-        metalness: 0.0,
-        envMapIntensity: 0.35,
-        emissive: '#0a0a0a',
-        emissiveIntensity: 0.12,
-        clearcoat: 0.25,
-        clearcoatRoughness: 0.55
-      }
-    }
-    
-    // KIDNEY CALYX MRI - Cup-shaped collectors
-    if (materialType === 'kidney_calyx_mri' || materialType === 'kidney_calyx') {
-      return {
-        roughness: 0.50,
-        metalness: 0.0,
-        envMapIntensity: 0.42,
-        emissive: '#121212',
-        emissiveIntensity: 0.08,
-        clearcoat: 0.32,
-        clearcoatRoughness: 0.48,
-        sheen: 0.12,
-        sheenRoughness: 0.5,
-        sheenColor: '#707070'
-      }
-    }
-    
-    // KIDNEY PELVIS MRI - Central collecting chamber
-    if (materialType === 'kidney_pelvis_mri' || materialType === 'kidney_pelvis') {
-      return {
-        roughness: 0.48,
-        metalness: 0.0,
-        envMapIntensity: 0.45,
-        emissive: '#151515',
-        emissiveIntensity: 0.07,
-        clearcoat: 0.30,
-        clearcoatRoughness: 0.45,
-        sheen: 0.12,
-        sheenRoughness: 0.52,
-        sheenColor: '#787878'
-      }
-    }
-    
-    // KIDNEY HILUM MRI - Concave entry region
-    if (materialType === 'kidney_hilum_mri' || materialType === 'kidney_hilum') {
-      return {
-        roughness: 0.58,
-        metalness: 0.0,
-        envMapIntensity: 0.32,
-        emissive: '#080808',
-        emissiveIntensity: 0.14,
-        clearcoat: 0.18,
-        clearcoatRoughness: 0.60
-      }
-    }
-    
-    // RENAL ARTERY MRI - Flow void (very dark)
-    if (materialType === 'renal_artery_mri' || materialType === 'renal_artery') {
-      return {
-        roughness: 0.38,
-        metalness: 0.0,
-        envMapIntensity: 0.48,
-        emissive: '#050505',
-        emissiveIntensity: 0.18,
-        clearcoat: 0.45,
-        clearcoatRoughness: 0.35,
-        sheen: 0.08,
-        sheenRoughness: 0.45,
-        sheenColor: '#303030'
-      }
-    }
-    
-    // RENAL VEIN MRI - Flow void with slight blue cast
-    if (materialType === 'renal_vein_mri' || materialType === 'renal_vein') {
-      return {
-        roughness: 0.40,
-        metalness: 0.0,
-        envMapIntensity: 0.46,
-        emissive: '#050508',
-        emissiveIntensity: 0.15,
-        clearcoat: 0.42,
-        clearcoatRoughness: 0.38,
-        sheen: 0.08,
-        sheenRoughness: 0.48,
-        sheenColor: '#353540'
-      }
-    }
-    
-    // URETER MRI - Medium gray tubular
-    if (materialType === 'ureter_mri' || materialType === 'ureter') {
-      return {
-        roughness: 0.52,
-        metalness: 0.0,
-        envMapIntensity: 0.40,
-        emissive: '#101010',
-        emissiveIntensity: 0.08,
-        clearcoat: 0.28,
-        clearcoatRoughness: 0.52
-      }
-    }
-    
-    // KIDNEY CAPSULE MRI - Bright outer membrane
-    if (materialType === 'kidney_capsule_mri' || materialType === 'kidney_capsule') {
       return {
         roughness: 0.42,
         metalness: 0.0,
-        envMapIntensity: 0.58,
-        emissive: '#222222',
-        emissiveIntensity: 0.04,
-        clearcoat: 0.38,
-        clearcoatRoughness: 0.42,
-        transmission: 0.08,
-        thickness: 0.3
+        envMapIntensity: 0.48,
+        emissive: '#3a1820',
+        emissiveIntensity: 0.14,
+        clearcoat: 0.52,
+        clearcoatRoughness: 0.38,
+        sheen: 0.15,
+        sheenRoughness: 0.50,
+        sheenColor: '#905050'
       }
     }
     
-    // PERIRENAL FAT MRI - Very bright (T1 high signal)
-    if (materialType === 'fat_mri' || materialType === 'fat') {
+    // KIDNEY PAPILLA - Pyramid tips, darker tissue
+    if (materialType === 'kidney_papilla_mri') {
       return {
-        roughness: 0.58,
+        roughness: 0.45,
+        metalness: 0.0,
+        envMapIntensity: 0.42,
+        emissive: '#2a1218',
+        emissiveIntensity: 0.16,
+        clearcoat: 0.48,
+        clearcoatRoughness: 0.42
+      }
+    }
+    
+    // KIDNEY CALYX - Cup-shaped collectors, pale pink
+    if (materialType === 'kidney_calyx_mri' || materialType === 'kidney_calyx') {
+      return {
+        roughness: 0.35,
+        metalness: 0.0,
+        envMapIntensity: 0.52,
+        emissive: '#4a3030',
+        emissiveIntensity: 0.10,
+        clearcoat: 0.60,
+        clearcoatRoughness: 0.32,
+        sheen: 0.18,
+        sheenRoughness: 0.45,
+        sheenColor: '#c09090'
+      }
+    }
+    
+    // KIDNEY PELVIS - Central collecting chamber, pale pink mucosal
+    if (materialType === 'kidney_pelvis_mri' || materialType === 'kidney_pelvis') {
+      return {
+        roughness: 0.35,
+        metalness: 0.0,
+        envMapIntensity: 0.52,
+        emissive: '#4a3535',
+        emissiveIntensity: 0.10,
+        clearcoat: 0.62,
+        clearcoatRoughness: 0.30,
+        sheen: 0.20,
+        sheenRoughness: 0.42,
+        sheenColor: '#d0a0a0'
+      }
+    }
+    
+    // KIDNEY HILUM - Concave entry region, darker tissue
+    if (materialType === 'kidney_hilum_mri' || materialType === 'kidney_hilum') {
+      return {
+        roughness: 0.45,
+        metalness: 0.0,
+        envMapIntensity: 0.42,
+        emissive: '#2a1518',
+        emissiveIntensity: 0.15,
+        clearcoat: 0.48,
+        clearcoatRoughness: 0.42
+      }
+    }
+    
+    // RENAL ARTERY - Bright arterial red
+    if (materialType === 'renal_artery_mri' || materialType === 'renal_artery') {
+      return {
+        roughness: 0.25,
         metalness: 0.0,
         envMapIntensity: 0.60,
-        emissive: '#282828',
-        emissiveIntensity: 0.03,
-        clearcoat: 0.15,
-        clearcoatRoughness: 0.58,
+        emissive: '#5a1820',
+        emissiveIntensity: 0.18,
+        clearcoat: 0.68,
+        clearcoatRoughness: 0.25,
+        sheen: 0.15,
+        sheenRoughness: 0.40,
+        sheenColor: '#e06060'
+      }
+    }
+    
+    // RENAL VEIN - Deep purple-blue venous
+    if (materialType === 'renal_vein_mri' || materialType === 'renal_vein') {
+      return {
+        roughness: 0.28,
+        metalness: 0.0,
+        envMapIntensity: 0.58,
+        emissive: '#2a1835',
+        emissiveIntensity: 0.15,
+        clearcoat: 0.65,
+        clearcoatRoughness: 0.28,
+        sheen: 0.14,
+        sheenRoughness: 0.45,
+        sheenColor: '#8060a0'
+      }
+    }
+    
+    // URETER - Pale tan/pink tubular tissue
+    if (materialType === 'ureter_mri' || materialType === 'ureter') {
+      return {
+        roughness: 0.40,
+        metalness: 0.0,
+        envMapIntensity: 0.50,
+        emissive: '#3a2820',
+        emissiveIntensity: 0.08,
+        clearcoat: 0.55,
+        clearcoatRoughness: 0.38
+      }
+    }
+    
+    // KIDNEY CAPSULE - Pale pinkish-white fibrous membrane
+    if (materialType === 'kidney_capsule_mri' || materialType === 'kidney_capsule') {
+      return {
+        roughness: 0.38,
+        metalness: 0.0,
+        envMapIntensity: 0.58,
+        emissive: '#4a3838',
+        emissiveIntensity: 0.06,
+        clearcoat: 0.55,
+        clearcoatRoughness: 0.35,
+        transmission: 0.15,
+        thickness: 0.5
+      }
+    }
+    
+    // PERIRENAL FAT - Yellowish adipose tissue
+    if (materialType === 'fat_mri' || materialType === 'fat') {
+      return {
+        roughness: 0.55,
+        metalness: 0.0,
+        envMapIntensity: 0.45,
+        emissive: '#3a3520',
+        emissiveIntensity: 0.05,
+        clearcoat: 0.25,
+        clearcoatRoughness: 0.50,
         transmission: 0.12,
-        thickness: 0.25
+        thickness: 0.3
       }
     }
     

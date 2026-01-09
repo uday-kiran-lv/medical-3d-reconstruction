@@ -3630,26 +3630,27 @@ function generateKidneyMesh(params) {
   const { detail = 0.9, side = 'single' } = params
   const segments = Math.floor(32 + detail * 48)  // High resolution for smooth appearance
   
-  // MRI grayscale colors for realistic medical visualization
-  const cortexColor = '#B8B8B8'      // Renal cortex (outer) - lighter gray in MRI
-  const medullaColor = '#707070'     // Medullary pyramids - darker in MRI
-  const pelvisColor = '#909090'      // Renal pelvis - medium gray
-  const calyxColor = '#858585'       // Calyces - slightly darker
-  const vesselArteryColor = '#5A5A5A' // Renal artery - dark
-  const vesselVeinColor = '#4A4A5A'   // Renal vein - slightly blue-gray
-  const capsuleColor = '#C8C8C8'     // Fibrous capsule - bright white
-  const ureterColor = '#A0A0A0'      // Ureter - medium gray
-  const fatColor = '#D8D8D8'         // Perirenal fat - bright
+  // Realistic tissue colors for photorealistic kidney visualization
+  // Similar to heart tissue - reddish-pink, vascular, soft-tissue appearance
+  const cortexColor = '#B86B77'      // Renal cortex (outer) - reddish-pink tissue
+  const medullaColor = '#8B4D5A'     // Medullary pyramids - darker reddish-brown
+  const pelvisColor = '#D4A5A5'      // Renal pelvis - pale pink (mucosal lining)
+  const calyxColor = '#C99494'       // Calyces - light pink tissue
+  const vesselArteryColor = '#C84048' // Renal artery - bright arterial red
+  const vesselVeinColor = '#6B4B7A'   // Renal vein - deep purple-blue venous
+  const capsuleColor = '#E8D0D0'     // Fibrous capsule - pale pinkish-white
+  const ureterColor = '#D4B0A0'      // Ureter - pale tan/pink tubular tissue
+  const fatColor = '#F5E6C8'         // Perirenal fat - yellowish adipose
   
   const meshData = {
-    type: 'kidney-mri',
+    type: 'kidney-realistic',
     components: []
   }
   
   // ==================== SINGLE DETAILED KIDNEY ====================
   // Main kidney positioned at center for detailed view
   
-  // 1. RENAL CAPSULE (Outermost fibrous layer) - Bright in MRI
+  // 1. RENAL CAPSULE (Outermost fibrous layer) - Pale pinkish membrane
   meshData.components.push({
     name: 'renal_capsule',
     geometry: 'sphere',
