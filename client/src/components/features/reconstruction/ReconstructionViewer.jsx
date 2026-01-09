@@ -125,34 +125,53 @@ const CustomMesh = ({ component, wireframe, materialType = 'bone' }) => {
     if (name.includes('ventricle') || name.includes('atrium') || 
         name.includes('septum') || name.includes('apex') || name.includes('heart') ||
         name.includes('papillary') || name.includes('trabeculae') || name.includes('infundibulum') ||
-        name.includes('myocardium') || name.includes('crista') || name.includes('moderator')) {
+        name.includes('myocardium') || name.includes('crista') || name.includes('moderator') ||
+        name.includes('lobe') && !name.includes('liver') && !name.includes('lung')) {
       return {
-        roughness: 0.38,           // Wet muscle surface - NOT matte/cartoon
+        roughness: 0.32,           // Smoother wet muscle surface - more realistic
         metalness: 0.0,
-        envMapIntensity: 0.55,     // Environment reflections for wet look
-        emissive: '#2a0a0a',       // Subsurface blood glow
-        emissiveIntensity: 0.10,   // Visible blood perfusion
-        clearcoat: 0.52,           // Wet epicardial/pericardial surface
-        clearcoatRoughness: 0.28,  // Sharp wet reflections
-        sheen: 0.22,               // Muscle fiber anisotropic sheen
-        sheenRoughness: 0.45,
-        sheenColor: '#aa5050',     // Blood-rich muscle sheen
-        transmission: 0.015,       // Slight translucency (real tissue)
-        thickness: 1.0,
-        attenuationColor: '#5a1515', // Blood absorption color
-        attenuationDistance: 0.8
+        envMapIntensity: 0.65,     // Strong environment reflections for wet look
+        emissive: '#3a1212',       // Stronger subsurface blood glow
+        emissiveIntensity: 0.12,   // More visible blood perfusion
+        clearcoat: 0.62,           // Very wet epicardial/pericardial surface
+        clearcoatRoughness: 0.22,  // Sharper wet reflections like reference
+        sheen: 0.28,               // Stronger muscle fiber anisotropic sheen
+        sheenRoughness: 0.38,
+        sheenColor: '#bb6060',     // Brighter blood-rich muscle sheen
+        transmission: 0.018,       // Slight translucency (real tissue)
+        thickness: 1.2,
+        attenuationColor: '#6a1818', // Blood absorption color
+        attenuationDistance: 0.7
       }
     }
     
-    // ARTERIES - Realistic arterial wall (intima, media, adventitia)
+    // CORONARY ARTERIES - Prominent surface vessels visible on epicardium
+    // Reference: Surgical/cadaveric appearance - clearly visible red vessels
+    // Slightly raised from surface, filled with oxygenated blood
+    if (name.includes('LAD') || name.includes('RCA') || name.includes('LCx') ||
+        name.includes('coronary') || name.includes('LMCA') ||
+        name.includes('diagonal') || name.includes('marginal') || name.includes('branch')) {
+      return {
+        roughness: 0.22,           // Very smooth vessel surface
+        metalness: 0.0,
+        envMapIntensity: 0.72,     // Strong wet surface reflections
+        emissive: '#6a1818',       // Bright oxygenated blood glow
+        emissiveIntensity: 0.14,   // Highly visible blood content
+        clearcoat: 0.68,           // Very wet adventitia surface
+        clearcoatRoughness: 0.18,  // Sharp wet highlights
+        sheen: 0.22,
+        sheenRoughness: 0.35,
+        sheenColor: '#cc5050'      // Bright arterial sheen
+      }
+    }
+    
+    // GREAT ARTERIES - Aorta and branches
     // Reference: Surgical exposure, angiography, cadaveric dissection
     // Elastic vessel walls with visible pulsatile tension
     // Oxygenated blood gives bright red internal glow
-    if (name.includes('aort') || name.includes('LAD') || name.includes('RCA') || 
-        name.includes('circumflex') || name.includes('coronary') || name.includes('LMCA') ||
-        name.includes('carotid') || name.includes('subclavian') || name.includes('brachiocephalic') ||
-        name.includes('diagonal') || name.includes('marginal') || name.includes('PDA') ||
-        name.includes('LCx') || name.includes('acute_marginal')) {
+    if (name.includes('aort') || name.includes('carotid') || 
+        name.includes('subclavian') || name.includes('brachiocephalic') ||
+        name.includes('PDA')) {
       return {
         roughness: 0.28,           // Smooth endothelium/intima - NOT matte
         metalness: 0.0,

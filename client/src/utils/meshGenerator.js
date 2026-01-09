@@ -1862,38 +1862,42 @@ function generateHeartMesh(params) {
   const colors = {
     // Myocardium layers
     myocardiumDeep: '#722F37',
-    myocardiumMid: '#8B3A42',
-    myocardiumOuter: '#9E4A52',
-    leftVentricle: '#7A3540',
-    rightVentricle: '#8B4049',
-    leftAtrium: '#9E5058',
-    rightAtrium: '#A85860',
-    septum: '#6B2D35',
-    apex: '#5E2830',
-    trabeculae: '#5A2528',
-    papillary: '#4E2225',
-    endocardium: '#B86E75',
+    // Myocardium layers - more saturated reddish-brown like reference
+    myocardiumDeep: '#8B3030',      // Deep red-brown
+    myocardiumMid: '#A04048',       // Mid-tone cardiac tissue
+    myocardiumOuter: '#B55058',     // Outer layer slightly lighter
+    leftVentricle: '#8A3845',       // Rich burgundy
+    rightVentricle: '#9B4850',      // Slightly lighter
+    leftAtrium: '#AA5560',          // Pinkish-red
+    rightAtrium: '#B56068',         // Lighter atrial tissue
+    septum: '#7A3038',              // Dark septal tissue
+    apex: '#702830',                // Dark apex region
+    trabeculae: '#682528',          // Internal muscle ridges
+    papillary: '#5E2225',           // Deep muscle
+    endocardium: '#C87880',         // Inner lining
     
-    // Great vessels
-    aortaRoot: '#C84858',
-    aortaAscending: '#BE4550',
-    aortaArch: '#B44048',
-    aortaDescending: '#AA3B42',
+    // Great vessels - brighter arterial red
+    aortaRoot: '#D85060',
+    aortaAscending: '#CC4855',
+    aortaArch: '#C24550',
+    aortaDescending: '#B84048',
     
     // Pulmonary circulation
     pulmonaryTrunk: '#4A5A80',
     pulmonaryBranch: '#556688',
-    pulmonaryVein: '#C85060',
+    pulmonaryVein: '#D85868',
     
     // Systemic veins
     svcColor: '#3D4D6D',
     ivcColor: '#455575',
     
-    // Coronary vessels
-    coronaryArtery: '#9A3038',
-    coronaryArteryBranch: '#8A2830',
-    coronaryVein: '#4A5878',
-    coronarySinus: '#3A4868',
+    // Coronary vessels - MORE PROMINENT red for visibility
+    coronaryArtery: '#C84048',      // Bright coronary red
+    coronaryArteryStem: '#D04550',  // Main coronary trunk
+    coronaryArteryBranch: '#B83840', // Secondary branches
+    coronaryArteryDistal: '#A83038', // Distal small vessels
+    coronaryVein: '#506888',
+    coronarySinus: '#405878',
     
     // Valvular/connective
     valveAnnulus: '#E8DDD5',
@@ -1901,6 +1905,7 @@ function generateHeartMesh(params) {
     chordae: '#D8CCC0',
     pericardium: '#F0E8E0',
     fat: '#F8E8C0',
+    fibrousRing: '#E0D8D0',
     fibrousBody: '#E0D8D0'
   }
   
@@ -2943,6 +2948,68 @@ function generateHeartMesh(params) {
   })
   
   // =====================================================
+  // ADDITIONAL CORONARY BRANCHES - Fine surface vessels
+  // Creates the realistic network visible on epicardium
+  // =====================================================
+  
+  // Additional LAD branches - creates visible surface network
+  for (let i = 0; i < 6; i++) {
+    meshData.components.push({
+      name: `LAD_branch_${i}`,
+      geometry: 'cylinder',
+      params: { radiusTop: 0.008 + (i % 2) * 0.003, radiusBottom: 0.012 + (i % 2) * 0.004, height: 0.22 + (i % 3) * 0.08, segments: 12 },
+      position: [-0.12 - i * 0.02, 0.15 - i * 0.18, 0.54 + (i % 2) * 0.04],
+      rotation: [0.25 + (i % 3) * 0.15, 0.35 + i * 0.12, 0.3 + (i % 2) * 0.1],
+      color: colors.coronaryArteryBranch,
+      materialType: 'coronary',
+      opacity: 1
+    })
+  }
+  
+  // LCx surface branches
+  for (let i = 0; i < 5; i++) {
+    meshData.components.push({
+      name: `LCx_branch_${i}`,
+      geometry: 'cylinder',
+      params: { radiusTop: 0.007 + (i % 2) * 0.003, radiusBottom: 0.011 + (i % 2) * 0.003, height: 0.18 + (i % 3) * 0.06, segments: 12 },
+      position: [-0.45 - i * 0.04, 0.25 - i * 0.12, 0.18 + (i % 2) * 0.06],
+      rotation: [0.32 + (i % 2) * 0.12, 0.55 + i * 0.08, 0.35 + (i % 3) * 0.1],
+      color: colors.coronaryArteryBranch,
+      materialType: 'coronary',
+      opacity: 1
+    })
+  }
+  
+  // RCA surface branches
+  for (let i = 0; i < 5; i++) {
+    meshData.components.push({
+      name: `RCA_branch_${i}`,
+      geometry: 'cylinder',
+      params: { radiusTop: 0.008 + (i % 2) * 0.003, radiusBottom: 0.012 + (i % 2) * 0.003, height: 0.2 + (i % 3) * 0.07, segments: 12 },
+      position: [0.48 + i * 0.03, 0.35 - i * 0.15, 0.32 + (i % 2) * 0.05],
+      rotation: [-0.18 - (i % 3) * 0.1, -0.22 - i * 0.06, -0.32 - (i % 2) * 0.12],
+      color: colors.coronaryArteryBranch,
+      materialType: 'coronary',
+      opacity: 1
+    })
+  }
+  
+  // Fine venous network on surface
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 1.5
+    meshData.components.push({
+      name: `surface_vein_${i}`,
+      geometry: 'cylinder',
+      params: { radiusTop: 0.006, radiusBottom: 0.010, height: 0.15 + (i % 3) * 0.05, segments: 10 },
+      position: [Math.sin(angle) * 0.35, -0.2 - i * 0.08, Math.cos(angle) * 0.4 + 0.2],
+      rotation: [0.2 + (i % 2) * 0.15, angle, 0.1 + (i % 3) * 0.08],
+      color: colors.coronaryVein,
+      materialType: 'vein',
+      opacity: 0.9
+    })
+  }
+  
+  // =====================================================
   // EPICARDIAL FAT - Realistic surface detail
   // =====================================================
   
@@ -2977,6 +3044,29 @@ function generateHeartMesh(params) {
     color: colors.fat,
     materialType: 'fat',
     opacity: 0.65
+  })
+  
+  // Additional fat deposits for realism
+  meshData.components.push({
+    name: 'fat_posterior_av',
+    geometry: 'sphere',
+    params: { radius: 0.12, widthSegments: 16, heightSegments: 16 },
+    position: [0.1, 0.22, -0.32],
+    scale: [1.4, 0.45, 0.5],
+    color: colors.fat,
+    materialType: 'fat',
+    opacity: 0.65
+  })
+  
+  meshData.components.push({
+    name: 'fat_apex_region',
+    geometry: 'sphere',
+    params: { radius: 0.06, widthSegments: 12, heightSegments: 12 },
+    position: [-0.08, -1.1, 0.1],
+    scale: [1.2, 0.8, 0.9],
+    color: colors.fat,
+    materialType: 'fat',
+    opacity: 0.6
   })
   
   return addStatistics(meshData)
