@@ -77,15 +77,18 @@ medical-3d-reconstruction/
 │   │   └── styles/                  # CSS files
 │   └── package.json
 ├── server/                          # Express Backend
+│   ├── api/
+│   │   └── index.js                 # Vercel serverless entry
 │   ├── src/
 │   │   ├── config/                  # Configuration
 │   │   ├── controllers/             # Route handlers
 │   │   ├── middleware/              # Middleware
 │   │   ├── models/                  # DB models
 │   │   ├── routes/                  # API routes
-│   │   └── index.js
+│   │   └── index.js                 # Local dev entry
+│   ├── vercel.json                  # Vercel config
 │   └── package.json
-└── DEPLOYMENT.md
+└── README.md
 ```
 
 ---
@@ -179,11 +182,34 @@ GET /api/reconstructions/:id/result
 
 ## 🌐 Deployment
 
-1. **Deploy Backend** to Vercel with root directory `server`
-2. **Deploy Frontend** to Vercel with root directory `client`
-3. Set environment variables in both projects
+### Backend (Vercel Serverless)
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed steps.
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+2. Import repository, set root directory to `server`
+3. Add environment variable:
+   ```
+   MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/medical_3d_db
+   ```
+4. Deploy
+
+### Frontend (Vercel Static)
+
+1. Import same repository, set root directory to `client`
+2. Add environment variable:
+   ```
+   VITE_API_BASE_URL=https://your-backend-url.vercel.app/api
+   ```
+3. Deploy
+
+### API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check |
+| `/api/images/upload` | POST | Upload image |
+| `/api/images/status/:id` | GET | Get image status |
+| `/api/reconstruction/create` | POST | Create reconstruction |
+| `/api/reconstruction/:id` | GET | Get reconstruction |
 
 ---
 
